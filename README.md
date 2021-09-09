@@ -5,6 +5,6 @@ Maquetador html con el fin de ser fácil de usar tanto para programadores **como
 - [x] Ver codigo actualizado a medida pones textos
 - [ ] Editar el codigo y inmediatamente actualizarse el iframe
 ## Contribuidores
-- Ru3n-xd
+- Rub3n-xd
 
 Todas las contribuciones son bienvenidas :-)
