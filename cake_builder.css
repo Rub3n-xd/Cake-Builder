@@ -41,24 +41,35 @@ body {
     height: 60px;
     background: rgb(20, 20, 20);
     color: rgb(221, 221, 221);
-    box-shadow: 0px 20px 50px rgba(187, 187, 187, 0.24);
     z-index: 1;
     overflow-x: auto;
     overflow-y: hidden;
 }
 .form_group {
+    height: 46px;
     width: max-content;
     border: 1px solid;
-    margin: 10px;
+    margin: 0 10px;
     border-radius: 10px;
     display: flex;
     align-items: center;
-    position: relative;
+    overflow: visible;
 }
 .form_group input{
     background:none;
     border: none;
     padding: 10px;
+}
+.form_group p{
+    margin: 0;
+    padding: 10px;
+    font-size: 13px;
+    word-wrap: normal;
+}
+.form_group input.initial{
+    background: local;
+    border: initial;
+    padding: 0 10px;
 }
 .form_group button{
     background:none;
@@ -83,6 +94,7 @@ button:hover{
     color: rgb(31, 31, 31) !important;
 }
 button{
+    cursor: pointer;
     background:none;
     border: none;
     border-left: inherit;
@@ -111,11 +123,14 @@ iframe {
 .source_code {
     position: fixed;
     bottom: 0;
-    /* display:none; */
+    display:none;
     padding: 10px;
     width: calc(100% - 20px);
     height: calc(40vh - 20px);
     background: rgb(20, 20, 20);
+}
+.source_code.display {
+    display: block;
 }
 .source_code textarea{
     border: none;
@@ -123,4 +138,25 @@ iframe {
     height: 100%;
     background: none;
     resize: none;
+}
+button#run_code {
+    background: rgb(131, 49, 49);
+    position: absolute;
+    border-radius: 0;
+    top: -35px;
+    right: 0;
+}
+
+button#run_code:hover {
+    background: rgba(131, 49, 49, .5);
+}
+button#hide_source {
+    background: rgb(49, 82, 131);
+    position: absolute;
+    border-radius: 0;
+    top: -35px;
+    left: 0;
+}
+button#hide_source:hover {
+    background: rgba(49, 82, 131, .5);
 }

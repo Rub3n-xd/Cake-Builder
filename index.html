@@ -9,24 +9,35 @@
         <form class="header">
             <button id="source_button" type="button">Ver codigo</button>
             <div class="form_group style1">
-                <input type="text" name="text" id="p_text" placeholder="Texto">
+                <p>Color de letra</p>
+                <input class="initial" type="color" name="color" id="color_text" placeholder="Texto">
+            </div>
+            <div class="form_group style1">
+                <p>Clase(s)</p>
+                <input type="text" name="class" id="class_element" placeholder="Clases">
+            </div>
+            <div class="form_group style1">
+                <p>Id</p>
+                <input type="text" name="id" id="id_element" placeholder="Id">
+            </div>
+            <div class="form_group style1">
+                <input type="text" name="text" id="text" placeholder="Texto">
                 <button id="p_button" type="button">Elemento p</button>
-            </div>
-            <div class="form_group style1">
-                <input type="text" name="text" id="h1_text" placeholder="Texto">
                 <button id="h1_button" type="button">Elemento h1</button>
-            </div>
-            <div class="form_group style1">
-                <input type="text" name="text" id="h2_text" placeholder="Texto">
                 <button id="h2_button" type="button">Elemento h2</button>
+                <button id="h3_button" type="button">Elemento h3</button>
+                <button id="h4_button" type="button">Elemento h4</button>
+                <button id="h5_button" type="button">Elemento h5</button>
+                <button id="h6_button" type="button">Elemento h6</button>
             </div>
-            
         </form>
 
         <iframe src="template.html" frameborder="0" id="iframe"></iframe>
         
-        <div class="source_code">
+        <div class="source_code" id="source_code">
             <textarea name="source" id="code" cols="30" rows="10" placeholder="code..."></textarea>
+            <button id="run_code">Ejecutar codigo</button>
+            <button id="hide_source">Ocultar codigo</button>
         </div>
 
         <script src="cake_builder.js"></script> <!--Script encargado de mandar mensajes al script del iframe-->
