@@ -4,7 +4,7 @@ Maquetador html con el fin de ser fácil de usar tanto para programadores **como
 - [x] Poner texto de diferentes etiquetas sin editar codigo
 - [x] Ver codigo actualizado a medida pones textos
 - [x] Selector de color del texto
-- [ ] Selector de id y clase(s)
+- [x] Selector de id y clase(s)
 - [ ] Poner todo tipo de elementos html desde el editor
 - [ ] Editar el codigo y inmediatamente actualizarse el iframe
 - [ ] Panel para poder editar **CSS**
