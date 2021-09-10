@@ -9,7 +9,7 @@ Maquetador html con el fin de ser fácil de usar tanto para programadores **como
 - [ ] Editar el codigo y inmediatamente actualizarse el iframe
 - [ ] Panel para poder editar **CSS**
 ## ¿Cómo probarlo?
-Gracias a github pages puedes acceder desde ***https://rub3n-xd.github.io/Cake-Builder/***
+Gracias a github pages puedes acceder desde ***https://rub3n-xd.github.io/Cake-Builder/src/index.html***
 ## Contribuidores
 - Rub3n-xd
 
