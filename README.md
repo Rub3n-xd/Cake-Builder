@@ -1,4 +1,6 @@
 <div align="center">
+
+<img src="Logo.png" alt="logo" width="100px" height="100px">
   
 # Cake-Builder
   
