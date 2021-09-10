@@ -12,27 +12,14 @@ function Messages(ev)
             data[2] = data[2].replace("\n",",")
         }
 
-        if(data[0].startsWith("p"))
-            document.body.innerHTML += "        <p style=\"color: "+ data[1] +"\">"+ data[2] +"</p>\n"
-
-        else if(data[0].startsWith("h1"))
-            document.body.innerHTML += "        <h1 style=\"color: "+ data[1] +"\">"+ data[2] +"</h1>\n"
-
-        else if(data[0].startsWith("h2"))
-            document.body.innerHTML += "        <h2 style=\"color: "+ data[1] +"\">"+ data[2] +"</h2>\n"
-
-        else if(data[0].startsWith("h3"))
-            document.body.innerHTML += "        <h3 style=\"color: "+ data[1] +"\">"+ data[2] +"</h3>\n"
-
-        else if(data[0].startsWith("h4"))
-            document.body.innerHTML += "        <h4 style=\"color: "+ data[1] +"\">"+ data[2] +"</h4>\n"
-
-        else if(data[0].startsWith("h5"))
-            document.body.innerHTML += "        <h5 style=\"color: "+ data[1] +"\">"+ data[2] +"</h5>\n"
-
-        else if(data[0].startsWith("h6"))
-            document.body.innerHTML += "        <h6 style=\"color: "+ data[1] +"\">"+ data[2] +"</h6>\n"
-
+        if(data[5] == "text" && data[2]) {//Estructura de textos
+            let element = "        <"+ data[0] +" style=\"color: "+ data[1] +"\" class=\""+ data[3] +"\" id=\"" + data[4] + "\">"+ data[2] +"</"+ data[0] +">\n"
+            if(!data[3])
+                element = element.replace("class=\"\"", "")
+            if(!data[4])
+                element = element.replace("id=\"\"", "")
+            document.body.innerHTML += element
+        }
         window.parent.postMessage(source_code(), '*')
     }
 }
