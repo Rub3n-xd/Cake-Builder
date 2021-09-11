@@ -2,9 +2,20 @@ window.addEventListener("message", Messages, false);
 
 function Messages(ev)
 {    
-    if(typeof ev.data == "string") {
-        let code = document.getElementById('code')
-        code.value = ev.data
+    if(typeof ev.data == "object") {
+        if(ev.data[1] == "code"){
+            let code = document.getElementById('code')
+            code.value = ev.data[0]
+        }
+        if(ev.data[1] == "notification"){
+            let notification = document.getElementById('notification')
+            let text = document.getElementById('notification_text')
+            text.textContent = ev.data[0]
+            notification.classList.add("show")
+            setTimeout(() => {
+                notification.classList.remove("show")
+            }, 2000);
+        }
     }
 }
 
@@ -16,69 +27,61 @@ var id_element = document.getElementById('id_element')
 
 document.getElementById('p_button').onclick = function() {
     let text_content = text.value
-    for(let x = 0; text_content.includes(","); x++) {
-        text_content = text_content.replace(",","\n")
-    } 
-    let message =  `p,${document.getElementById('color_text').value},${text_content},${class_element.value},${id_element.value},text`;; 
+    
+    let message =  ["p",document.getElementById('color_text').value,text_content,class_element.value,id_element.value,"text"]; 
     console.log(message)
     iframe.postMessage(message, '*' );
 }
 document.getElementById('h1_button').onclick = function() {
     let text_content = text.value
-    for(let x = 0; text_content.includes(","); x++) {
-        text_content = text_content.replace(",","\n")
-    } 
-    let message =  `h1,${document.getElementById('color_text').value},${text_content},${class_element.value},${id_element.value},text`;;
+    
+    let message =  ["h1",document.getElementById('color_text').value,text_content,class_element.value,id_element.value,"text"];
 
     iframe.postMessage(message, '*' );
 }
 document.getElementById('h2_button').onclick = function() {
     let text_content = text.value
-    for(let x = 0; text_content.includes(","); x++) {
-        text_content = text_content.replace(",","\n")
-    } 
-    let message =  `h2,${document.getElementById('color_text').value},${text_content},${class_element.value},${id_element.value},text`;;
+    
+    let message =  ["h2",document.getElementById('color_text').value,text_content,class_element.value,id_element.value,"text"];
 
     iframe.postMessage(message, '*' );
 }
 document.getElementById('h3_button').onclick = function() {
     let text_content = text.value
-    for(let x = 0; text_content.includes(","); x++) {
-        text_content = text_content.replace(",","\n")
-    } 
-    let message =  `h3,${document.getElementById('color_text').value},${text_content},${class_element.value},${id_element.value},text`;;
+    
+    let message =  ["h3",document.getElementById('color_text').value,text_content,class_element.value,id_element.value,"text"];
 
     iframe.postMessage(message, '*' );
 }
 document.getElementById('h4_button').onclick = function() {
     let text_content = text.value
-    for(let x = 0; text_content.includes(","); x++) {
-        text_content = text_content.replace(",","\n")
-    } 
-    let message =  `h4,${document.getElementById('color_text').value},${text_content},${class_element.value},${id_element.value},text`;;
-
+    
+    let message =  ["h4",document.getElementById('color_text').value,text_content,class_element.value,id_element.value,"text"];
     iframe.postMessage(message, '*' );
 }
 document.getElementById('h5_button').onclick = function() {
     let text_content = text.value
-    for(let x = 0; text_content.includes(","); x++) {
-        text_content = text_content.replace(",","\n")
-    } 
-    let message =  `h5,${document.getElementById('color_text').value},${text_content},${class_element.value},${id_element.value},text`;;
+    
+    let message =  ["h5",document.getElementById('color_text').value,text_content,class_element.value,id_element.value,"text"];
 
     iframe.postMessage(message, '*' );
 }
 document.getElementById('h6_button').onclick = function() {
     let text_content = text.value
-    for(let x = 0; text_content.includes(","); x++) {
-        text_content = text_content.replace(",","\n")
-    } 
-    let message =  `h6,${document.getElementById('color_text').value},${text_content},${class_element.value},${id_element.value},text`;;
+    
+    let message =  ["h6",document.getElementById('color_text').value,text_content,class_element.value,id_element.value,"text"];
+
+    iframe.postMessage(message, '*' );
+}
+document.getElementById('button_button').onclick = function() {
+    let text_content = text.value
+    
+    let message =  ["button",document.getElementById('color_text').value,text_content,class_element.value,id_element.value,"text"];
 
     iframe.postMessage(message, '*' );
 }
 document.getElementById('source_button').onclick = function() {
-    let message =  "\n"
+    let message =  ""
 
     iframe.postMessage(message, '*' );
 
@@ -90,4 +93,10 @@ document.getElementById('hide_source').onclick = function() {
     iframe.postMessage(message, '*' );
 
     document.getElementById("source_code").classList.remove("display")
+}
+document.getElementById('run_code').onclick = function() {
+    let code = document.getElementById('code')
+    let message =  [code.value,null,null,null,null,"code"]
+
+    iframe.postMessage(message, '*' );
 }

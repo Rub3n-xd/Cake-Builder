@@ -143,7 +143,7 @@ button#run_code {
     background: rgb(131, 49, 49);
     position: absolute;
     border-radius: 0;
-    top: -35px;
+    top: -36px;
     right: 0;
 }
 
@@ -154,9 +154,39 @@ button#hide_source {
     background: rgb(49, 82, 131);
     position: absolute;
     border-radius: 0;
-    top: -35px;
+    top: -36px;
     left: 0;
 }
 button#hide_source:hover {
     background: rgba(49, 82, 131, .5);
+}
+.notification_error {
+    padding: 10px;
+    background: rgb(148, 51, 51);
+    position: fixed;
+    bottom: -72px;
+    right: 0;
+}
+.notification_error.show {
+    animation: show_notification 2s;
+}
+@keyframes show_notification {
+    0% {
+        bottom: -72px;
+    }
+    20% {
+        bottom: -72px;
+    }
+    50% {
+        bottom: 0px;
+    }
+    70% {
+        bottom: 0px;
+    }
+    90% {
+        bottom: -72px;
+    }
+    100% {
+        bottom: -72px;
+    }
 }

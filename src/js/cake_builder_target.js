@@ -1,18 +1,18 @@
 window.addEventListener("message", Messages, false);
-window.parent.postMessage(source_code(), '*')
+window.parent.postMessage([source_code(), "code"], '*')
 
 function Messages(ev)
-{ 
+{
     console.log(ev.origin, typeof ev.data, ev.data);
 
-    if(typeof ev.data == "string") {
-        let data = ev.data.split(",")
+    if(typeof ev.data == "object") {
+        let data = ev.data
 
-        for(let x = 0; data[2].includes("\n"); x++) {
-            data[2] = data[2].replace("\n",",")
-        }
-
-        if(data[5] == "text" && data[2]) {//Estructura de textos
+        if(data[5] == "text") {//Estructura de textos
+            if(!data[2]) {
+                window.parent.postMessage(["Ingrese un texto", "notification"], '*')
+                return
+            }
             let element = "        <"+ data[0] +" style=\"color: "+ data[1] +"\" class=\""+ data[3] +"\" id=\"" + data[4] + "\">"+ data[2] +"</"+ data[0] +">\n"
             if(!data[3])
                 element = element.replace("class=\"\"", "")
@@ -20,21 +20,34 @@ function Messages(ev)
                 element = element.replace("id=\"\"", "")
             document.body.innerHTML += element
         }
-        window.parent.postMessage(source_code(), '*')
+        else if(data[5] == "code") {
+            get_source_code(data[0]);
+        }
+        window.parent.postMessage([source_code(), "code"], '*')
     }
 }
 /**
  * @returns {String} Code
 **/
 function source_code() {
-    let code = "<!DOCTYPE html>\n<html>\n    <head>\n        " + document.head.innerHTML + "\n    </head>\n    <body>\n        " + document.body.innerHTML + "\n    </body>\n</html>"
+    let code = "<!DOCTYPE html>\n<html>\n    <head>\n        " + document.head.innerHTML.trimStart().trimEnd() + "\n    </head>\n    <body>\n        " + document.body.innerHTML.trimStart().trimEnd() + "\n    </body>\n</html>"
     return code;
 }
+/** 
+ * @param {String} code
+*/
 function get_source_code(code) {
-    //TODO: hacer una función que obtenga el codigo
-    //y lo divida en dos partes, el head y el body,
-    //Lo demás puede ser omitido. Tras obtener esos
-    //dos strings sustituir por su correspondiente
-    //innerHTML ("document.head.innerHTML", 
-    //"document.body.innerHTML").
+    let nodeshtml = ["<head>", "</head>", "<body>", "</body>", "<html>", "</html>", "<!DOCTYPE html>"] /* Etiquetas que no pueden faltar en el codigo */ 
+    for(let x = 0; x  != nodeshtml.length; x++) {
+        if(!code.includes(nodeshtml[x])) {
+            window.parent.postMessage(["No se ha podido ejecutar el codigo, no se encontro la etiqueta " + nodeshtml[x], "notification"], '*')
+            return
+        }
+    }
+    let head = code.substring(code.indexOf(nodeshtml[0]) + nodeshtml[0].length, code.indexOf(nodeshtml[1]))
+    
+    let body = code.substring(code.indexOf(nodeshtml[2]) + nodeshtml[2].length, code.indexOf(nodeshtml[3]))
+
+    document.head.innerHTML = head;
+    document.body.innerHTML = body;
 }
