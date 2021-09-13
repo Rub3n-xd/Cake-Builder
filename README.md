@@ -28,7 +28,7 @@ Gracias a github pages puedes acceder desde ***https://rub3n-xd.github.io/Cake-B
 
 <div align="center">
 
-<img src="https://github.com/Rub3n-xd/Cake-Builder/blob/a470ace8b61d4f6ca9c97d8c70bc3310ec20bca6/Capturas/Captura%20%231.png" alt="captura" width="400px" height="250px">
+<img src="https://github.com/Rub3n-xd/Cake-Builder/blob/821a7a820ca6fbb247cfce9d699f01b007891ebe/Capturas/Captura%20%231.png" alt="captura" width="400px" height="250px">
   
 </div>
 
