@@ -1,11 +1,37 @@
+
 window.addEventListener("message", Messages, false);
 
 function Messages(ev)
 {    
     if(typeof ev.data == "object") {
         if(ev.data[1] == "code"){
+            var color_1 = ["&lt;!DOCTYPE", "&lt;([a-z]|[0-9])+&gt;", "&lt;([a-z]|[0-9])+", "&lt;\/([a-z]|[0-9])+&gt;"];
+            //Etiquetas
+            var regex_color_1 = new RegExp(color_1.join("|"), 'ig');
+            //Comentarios TODO: Arreglar RegExp 
+            //para que acepte todo tipo de 
+            //caracteres menos la secuencia "--&gt;"
+            //Ya que colorea a partir del primer "&lt;!--"
+            //de una linea hasta el último  "--&gt;" de
+            //una linea, por ejemplo:
+
+            //<!--Esto se colorea--> Esto se colorea <!--Esto se colorea-->
+            var regex_color_2 = new RegExp(/&lt;!--.*--&gt;/g);
+            //Cadenas
+            var regex_color_3 = new RegExp(/\"[^\"]*\"/g); 
+
             let code = document.getElementById('code')
-            code.value = ev.data[0]
+            code.innerHTML = ev.data[0].replace("spellcheck=\"false\" contenteditable=\"true\" ", "").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+            .replace(regex_color_3,function color3(str){
+                return '<span class="code_color_3">'+str+'</span>'
+            })
+            .replace(regex_color_1,function color1(str){
+                return '<span class="code_color_1">'+str+'</span>'
+            })
+            .replace(regex_color_2,function color2(str){
+                return '<span class="code_color_2">'+str+'</span>'
+            })
+            
         }
         if(ev.data[1] == "notification"){
             let notification = document.getElementById('notification')
@@ -96,7 +122,7 @@ document.getElementById('hide_source').onclick = function() {
 }
 document.getElementById('run_code').onclick = function() {
     let code = document.getElementById('code')
-    let message =  [code.value,null,null,null,null,"code"]
+    let message =  [code.innerText,null,null,null,null,"code"]
 
     iframe.postMessage(message, '*' );
 }

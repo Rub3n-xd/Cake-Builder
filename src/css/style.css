@@ -6,6 +6,10 @@
     font-family: "Montserrat-Bold";
     src: url(../fonts/Montserrat-Bold.ttf);
 }
+@font-face {
+    font-family: "RobotoMono-Light";
+    src: url(../fonts/RobotoMono-Light.ttf);
+}
 body {
     text-align: center;
     align-items: center;
@@ -36,4 +40,66 @@ body::-webkit-scrollbar-thumb {
 }
 body::-webkit-scrollbar-thumb:hover {
     background: rgb(126, 126, 126);
+}
+.content {
+    padding: 10px 30vw;
+}
+.title {
+    padding: 10px 20px;
+    width: 100%;
+    width: calc(100% - 20px);
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    align-items:center;
+}
+.title img{
+    width: 50px;
+    height: 50px;
+    padding: 0px 10px;
+    border-radius: 50%;
+}
+.gradient {
+    background: linear-gradient(45deg, rgb(112, 5, 64), rgb(99, 17, 31));
+}
+.brown_color {
+    color: rgb(138, 79, 40);
+}
+.blue_color {
+    color: rgb(32, 129, 185);
+}
+.write_anim {
+    color: inherit;
+    animation: write_anim 1s infinite;
+}
+.code {
+    font-family: "RobotoMono-Light";
+    padding: 0px 2px;
+    background: rgba(15, 15, 15, 0.5);
+    width: max-content;
+    border-radius: 5px;
+}
+.important_box {
+    padding: 10px;
+    background: rgba(70, 70, 70, 0.5);
+    border: 1px solid rgba(8, 8, 8, 0.5);
+    box-shadow: 0px 5px 5px rgba(8, 8, 8, 0.5);
+    border-radius: 15px;
+    text-align: start;
+}
+@keyframes write_anim{
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@media screen and (max-width: 550px) {
+    .content {
+        padding: 10px;
+    }
 }

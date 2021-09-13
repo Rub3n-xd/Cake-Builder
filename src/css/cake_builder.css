@@ -21,7 +21,7 @@ p, button, a, i, img, input {
     font-family: "Montserrat-Light";
     color: rgb(190, 190, 190);
 }
-textarea {
+#code {
     font-family: "RobotoMono-Light";
     color: rgb(190, 190, 190);
 }
@@ -128,16 +128,19 @@ iframe {
     width: calc(100% - 20px);
     height: calc(40vh - 20px);
     background: rgb(20, 20, 20);
+    resize: both;
 }
 .source_code.display {
     display: block;
 }
-.source_code textarea{
+.source_code #code{
+    white-space: break-spaces;
     border: none;
     width: 100%;
     height: 100%;
     background: none;
     resize: none;
+    overflow: auto;
 }
 button#run_code {
     background: rgb(131, 49, 49);
@@ -170,6 +173,18 @@ button#hide_source:hover {
 .notification_error.show {
     animation: show_notification 2s;
 }
+.code_color_1 {
+    color: rgb(53, 116, 209);
+}
+.code_color_2 {
+    color: rgb(29, 107, 55);
+}
+.code_color_4 {
+    color: rgb(0, 153, 158);
+}
+.code_color_3 {
+    color: rgb(209, 123, 53) !important;
+}
 @keyframes show_notification {
     0% {
         bottom: -72px;
@@ -189,4 +204,7 @@ button#hide_source:hover {
     100% {
         bottom: -72px;
     }
+}
+::-webkit-resizer {
+    background: brown;
 }

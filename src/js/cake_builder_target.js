@@ -1,6 +1,8 @@
+document.body.setAttribute("spellcheck","false")
+document.body.setAttribute("contenteditable","true")
+
 window.addEventListener("message", Messages, false);
 window.parent.postMessage([source_code(), "code"], '*')
-
 function Messages(ev)
 {
     console.log(ev.origin, typeof ev.data, ev.data);
@@ -37,17 +39,27 @@ function source_code() {
  * @param {String} code
 */
 function get_source_code(code) {
-    let nodeshtml = ["<head>", "</head>", "<body>", "</body>", "<html>", "</html>", "<!DOCTYPE html>"] /* Etiquetas que no pueden faltar en el codigo */ 
+    let nodeshtml = ["<head>", "</head>", "<body>", "</body>", "<html>", "</html>", "<!DOCTYPE html>"] /* Etiquetas que no pueden faltar en el código */ 
     for(let x = 0; x  != nodeshtml.length; x++) {
         if(!code.includes(nodeshtml[x])) {
-            window.parent.postMessage(["No se ha podido ejecutar el codigo, no se encontro la etiqueta " + nodeshtml[x], "notification"], '*')
+            window.parent.postMessage(["No se ha podido ejecutar el código, no se encontro la etiqueta " + nodeshtml[x], "notification"], '*')
             return
         }
     }
-    let head = code.substring(code.indexOf(nodeshtml[0]) + nodeshtml[0].length, code.indexOf(nodeshtml[1]))
+
+    let head = code.substring(code.indexOf(nodeshtml[0]) + nodeshtml[0].length, code.indexOf(nodeshtml[1])).replace("<body>", "<body spellcheck=\"false\" contenteditable=\"true\">")
     
     let body = code.substring(code.indexOf(nodeshtml[2]) + nodeshtml[2].length, code.indexOf(nodeshtml[3]))
 
     document.head.innerHTML = head;
     document.body.innerHTML = body;
+}
+document.onkeydown = function() {
+    window.parent.postMessage([source_code(), "code"], '*')
+}
+document.onkeyup = function() {
+    window.parent.postMessage([source_code(), "code"], '*')
+}
+document.ondragend = function() {
+    window.parent.postMessage([source_code(), "code"], '*')
 }

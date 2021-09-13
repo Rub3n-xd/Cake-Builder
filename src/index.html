@@ -7,7 +7,7 @@
     </head>
     <body>
         <form class="header">
-            <button id="source_button" type="button">Ver codigo</button>
+            <button id="source_button" type="button">Ver código</button>
             <div class="form_group style1">
                 <p>Color de letra</p>
                 <input class="initial" type="color" name="color" id="color_text" placeholder="Texto">
@@ -36,9 +36,9 @@
         <iframe src="template.html" frameborder="0" id="iframe"></iframe>
         
         <div class="source_code" id="source_code">
-            <textarea name="source" id="code" cols="30" rows="10" placeholder="code..."></textarea>
-            <button id="run_code">Ejecutar codigo</button>
-            <button id="hide_source">Ocultar codigo</button>
+            <div spellcheck="false" contenteditable="true" name="source" id="code" cols="30" rows="10" placeholder="code..."></div>
+            <button id="run_code">Ejecutar código</button>
+            <button id="hide_source">Ocultar código</button>
         </div>
 
         <div class="notification_error" id="notification">
