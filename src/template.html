@@ -4,21 +4,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/style.css"> <!--Estilo usado como plantilla-->
         <title>Title</title>
+        <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet">
     </head>
     <body>
-        <div class="title gradient">
-            <img src="../Logo.png" alt="Logo">
-            <h1>
-                <span class="blue_color">Cake</span> 
-                <span class="brown_color">Builder<span class="write_anim">|</span></span>
-            </h1>
+        <div class="header gradient">
+            <div class="layer_1">
+                <img class="icon top_left rotate45deg" src="imagenes/cake icon.png" alt="pastel">
+                <img class="icon top20_right10 rotate45deg" src="imagenes/cake icon.png" alt="pastel">
+                <img class="icon bottom_left40 rotate-45deg" src="imagenes/cake icon.png" alt="pastel">
+            </div>
+            <div>
+                <div class="title">
+                        <img src="../Logo.png" alt="Logo">
+                    <h1>
+                        <span class="blue_color">Cake</span> 
+                        <span class="blue_color">Builder<span class="write_anim">|</span></span>
+                    </h1>
+                </div>
+                <p>Crea, edita y modifica páginas facilmente</p>
+            </div>
         </div>
         <article class="content">
             <p>Bienvenido a la plantilla del editor, aquí 
                 puedes ser libre de editar cualquier texto 
                 o imagen del iframe (página dentro de otra)
                 . Por si quieres editar el código, el boton
-                 <span class="code">"Ver código"</span> 
+                 <span class="code"><i class="bx bx-code-alt"></i></span> 
                  te permitirá ver y editar el código 
                 fuente HTML de la página.
             </p>
@@ -28,27 +39,27 @@
                 <span class="code">class</span> del elemento html
                 (también el del color del texto pero lo obviaremos)
                 , si has tenido contacto con HTML sabrás para qué
-                son estás propiedades, sino te lo explicamos
+                son estas propiedades, sino te lo explicamos
                 a continuación.
             </p>
-            <div class="important_box">
-                <h2>- Propiedad <span class="code">id</span></h2>
-                <p>indentificador el cual se
-                    lee normalmente con CSS con selectores para añadirle 
-                    estilizados y también con JavaScript para añadirle 
-                    funcionalidades, cabe destacar que es recomendable 
-                    no poner un mismo id a dos elementos por lo cual se
-                    usan en elementos especiales.
-                </p>
-                <h2>- Propiedad <span class="code">class</span></h2>
-                <p>Al igual que el anterior es un
-                    indentificador el cual se lee normalmente con CSS con selectores 
-                    para añadirle estilizados y también con JavaScript para añadirle 
-                    funcionalidades a un elemento html, pero a diferencia del id este 
-                    sí se puede usar en diferentes elementos html.
-                </p>
-            </div>
         </article>
+        <div class="important_box">
+            <h2>- Propiedad <span class="code">id</span></h2>
+            <p>indentificador el cual se
+                lee normalmente con CSS con selectores para añadirle 
+                estilizados y también con JavaScript para añadirle 
+                funcionalidades, cabe destacar que es recomendable 
+                no poner un mismo id a dos elementos por lo cual se
+                usan en elementos especiales.
+            </p>
+            <h2>- Propiedad <span class="code">class</span></h2>
+            <p>Al igual que el anterior es un
+                indentificador el cual se lee normalmente con CSS con selectores 
+                para añadirle estilizados y también con JavaScript para añadirle 
+                funcionalidades a un elemento html, pero a diferencia del id este 
+                sí se puede usar en diferentes elementos html.
+            </p>
+        </div>
         <script src="js/cake_builder_target.js"></script> <!--Script importante para el funcionamiento del motor-->
     </body>
 </html>

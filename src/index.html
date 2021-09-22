@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script async src="js/cake_builder.js"></script> <!--Script encargado de mandar mensajes al script del iframe-->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Cake builder</title>
         <link rel="stylesheet" href="css/cake_builder.css">
+        <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet">
     </head>
     <body>
         <form class="header">
-            <button id="source_button" type="button">Ver código</button>
-            <div class="form_group style1">
-                <p>Color de letra</p>
-                <input class="initial" type="color" name="color" id="color_text" placeholder="Texto">
-            </div>
             <div class="form_group style1">
                 <p>Clase(s)</p>
                 <input type="text" name="class" id="class_element" placeholder="Clases">
@@ -21,30 +18,74 @@
                 <input type="text" name="id" id="id_element" placeholder="Id">
             </div>
             <div class="form_group style1">
-                <input type="text" name="text" id="text" placeholder="Texto">
-                <button id="button_button" type="button">Elemento button</button>
-                <button id="p_button" type="button">Elemento p</button>
-                <button id="h1_button" type="button">Elemento h1</button>
-                <button id="h2_button" type="button">Elemento h2</button>
-                <button id="h3_button" type="button">Elemento h3</button>
-                <button id="h4_button" type="button">Elemento h4</button>
-                <button id="h5_button" type="button">Elemento h5</button>
-                <button id="h6_button" type="button">Elemento h6</button>
+                <button type="button" id="toggle_text_menu">
+                    <i class="bx bx-text icon"></i>
+                </button>
+            </div>
+            <div class="modify_type">
+                <button type="button" class="type border_right"><i class="bx bx-pencil"></i></button>
+                <button type="button" class="type" id="drag_button"><i class="bx bx-move"></i></button>
+                <button type="button" class="type border_left" id="source_button"><i class="bx bx-code-alt"></i></button>
             </div>
         </form>
 
         <iframe src="template.html" frameborder="0" id="iframe"></iframe>
         
         <div class="source_code" id="source_code">
-            <div spellcheck="false" contenteditable="true" name="source" id="code" cols="30" rows="10" placeholder="code..."></div>
-            <button id="run_code">Ejecutar código</button>
-            <button id="hide_source">Ocultar código</button>
+            <div class="code_container">
+                <ul id="code_lines">
+                </ul>
+                <div spellcheck="false" contenteditable="true" name="source" id="code" cols="30" rows="10" placeholder="code..."></div>
+            </div>
         </div>
+        <button id="hide_source">Ocultar código</button>
+        <button id="run_code">Ejecutar código</button>
 
         <div class="notification_error" id="notification">
             <p id="notification_text"></p>
         </div>
 
-        <script src="js/cake_builder.js"></script> <!--Script encargado de mandar mensajes al script del iframe-->
+        <div class="windows_layer" id="windows_layer">
+            <div class="window" id="text_menu">
+                <div class="title">
+                    <h1>Añadir texto</h1>
+                </div>
+                <div class="content">
+
+                    <div class="form_group style1">
+                        <textarea type="text" name="text" id="text" placeholder="Texto a añadir  (puedes añadir elementos html en el texto)"></textarea>
+                    </div>
+                    <div class="form_group style1">
+                        <p>Color de letra</p>
+                        <input class="initial" type="color" name="color" id="color_text">
+                    </div>
+                    
+                    <div class="checkbox_group">
+                        <input type="checkbox" id="letter_color">
+                        <label for="letter_color"><i class="bx bx-checkbox"></i> Color de letra heredado</label>
+                    <input type="checkbox" id="underline">
+                    <label for="underline"><i class="bx bx-checkbox"></i> <span class="text_underline">Texto subrayado</span></label>
+                    </div>
+                    
+                    <div class="flex_item">
+                        <button class="submit_style" id="button_button" type="button">Elemento button</button>
+                        <button class="submit_style" id="p_button" type="button">Elemento p</button>
+                    </div>
+                    <div class="flex_item">
+                        <button class="submit_style" id="h1_button" type="button">Elemento h1</button>
+                        <button class="submit_style" id="h2_button" type="button">Elemento h2</button>
+                    </div>
+                    <div class="flex_item">
+                        <button class="submit_style" id="h3_button" type="button">Elemento h3</button>
+                        <button class="submit_style" id="h4_button" type="button">Elemento h4</button>
+                    </div>
+                    <div class="flex_item">
+                        <button class="submit_style" id="h5_button" type="button">Elemento h5</button>
+                        <button class="submit_style" id="h6_button" type="button">Elemento h6</button>
+                    </div>
+                    <button class="cancel_style" id="cancel_text_menu">Cancelar</button>
+                </div>
+            </div>        
+        </div>
     </body>
 </html>

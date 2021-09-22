@@ -17,7 +17,7 @@ h1, h2, h3, h4, h5, h6 {
     font-family: "Montserrat-Bold";
     color: rgb(205, 205, 205);
 }
-p, button, a, i, img, input {
+p, button, a, i, img, input, textarea, label {
     font-family: "Montserrat-Light";
     color: rgb(190, 190, 190);
 }
@@ -46,10 +46,10 @@ body {
     overflow-y: hidden;
 }
 .form_group {
-    height: 46px;
+    /* height: 46px; */
     width: max-content;
     border: 1px solid;
-    margin: 0 10px;
+    margin: 10px;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -66,7 +66,7 @@ body {
     font-size: 13px;
     word-wrap: normal;
 }
-.form_group input.initial{
+.form_group input[type="color"]{
     background: local;
     border: initial;
     padding: 0 10px;
@@ -77,6 +77,7 @@ body {
     border-left: inherit;
     border-radius: 0px;
     padding: 10px;
+    margin: 0px;
     box-shadow: 0px 1px 10px rgba(20, 20, 20, 0.5) inset;
 }
 button:hover{
@@ -100,8 +101,24 @@ button{
     border-left: inherit;
     border-radius: 10px;
     padding: 10px;
+    margin: 10px;
     background: rgb(34, 34, 34);
-    box-shadow: 0px 1px 10px rgba(20, 20, 20, 0.5) inset;
+}
+button.submit_style {
+    background: rgb(44, 90, 150);
+    border: 1px solid rgb(22, 43, 71);
+}
+button.submit_style:hover {
+    background: rgb(32, 65, 107);
+    border: 1px solid rgb(14, 28, 46);
+}
+button.cancel_style {
+    background: rgb(150, 44, 44);
+    border: 1px solid rgb(71, 22, 22);
+}
+button.cancel_style:hover {
+    background: rgb(107, 32, 32);
+    border: 1px solid rgb(46, 14, 14);
 }
 iframe {
     padding-top: 80px;
@@ -122,46 +139,76 @@ iframe {
 }
 .source_code {
     position: fixed;
-    bottom: 0;
+    top: 60vh;
     display:none;
     padding: 10px;
     width: calc(100% - 20px);
     height: calc(40vh - 20px);
     background: rgb(20, 20, 20);
-    resize: both;
 }
 .source_code.display {
     display: block;
 }
-.source_code #code{
-    white-space: break-spaces;
-    border: none;
+.source_code .code_container {
+    overflow-y: auto;
+    overflow-x: none;
     width: 100%;
     height: 100%;
+    display: flex;
+}
+.source_code .code_container #code_lines{
+    display: initial !important;
+    width: 60px;
+    padding: 0;
+    margin: 0 10px 0 0;
+    height: max-content;
+    list-style: none;
+    font-size: smaller;
+    border-right: 1px solid rgb(58, 58, 58);
+    text-align: center;
+    font-family: "RobotoMono-Light";
+    color: rgb(205, 205, 205);
+    align-items: center;
+}
+.source_code .code_container #code{
+    white-space: pre;
+    font-size: smaller;
+    border: none;
+    width: 100%;
+    height: max-content;
     background: none;
     resize: none;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: none;
 }
 button#run_code {
+    display: none;
     background: rgb(131, 49, 49);
     position: absolute;
     border-radius: 0;
-    top: -36px;
+    border-top-left-radius: 10px;
+    bottom: calc(40vh);
     right: 0;
+    margin: 0;
 }
-
 button#run_code:hover {
     background: rgba(131, 49, 49, .5);
 }
 button#hide_source {
+    display: none;
     background: rgb(49, 82, 131);
     position: absolute;
     border-radius: 0;
-    top: -36px;
+    border-top-right-radius: 10px;
+    bottom: calc(40vh);
     left: 0;
+    margin: 0;
 }
 button#hide_source:hover {
     background: rgba(49, 82, 131, .5);
+}
+button#hide_source.display, button#run_code.display {
+    display: initial;
 }
 .notification_error {
     padding: 10px;
@@ -185,6 +232,53 @@ button#hide_source:hover {
 .code_color_3 {
     color: rgb(209, 123, 53) !important;
 }
+.window {
+    padding: 0px;
+    display: none;
+    background:rgb(43, 43, 43);
+    border: 1px solid rgb(17, 17, 17);
+    border-radius: 15px;
+    min-width: 30%;
+    max-height: 95vh;
+    overflow-x: none;
+    overflow-y: scroll;
+}
+.window .title {
+    width: calc(100% - 20px);
+    padding: 10px;
+    background:rgb(32, 32, 32);
+    border-bottom: 1px solid rgb(56, 56, 56);
+    justify-items: center;
+    display: grid;
+}
+.window .content {
+    width: calc(100% - 20px);
+    padding: 10px;
+    justify-items: center;
+    display: grid;
+}
+.window.show {
+    display: initial;
+}
+.windows_layer {
+    position: fixed;
+    display: none;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.4);
+}
+.windows_layer.show {
+    display: flex;
+}
+.flex_item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 @keyframes show_notification {
     0% {
         bottom: -72px;
@@ -206,5 +300,90 @@ button#hide_source:hover {
     }
 }
 ::-webkit-resizer {
-    background: brown;
+    background: rgba(0, 0, 0, 0);
+}
+textarea {
+    background:rgba(0, 0, 0, 0);
+    height: 100px;
+    width: 200px;
+    padding: 10px;
+    resize: none;
+    border: none;
+}
+input[type="checkbox"] {
+	display: none;
+}
+input[type="checkbox"] + label {
+    line-height: 3em;
+    cursor: pointer;
+    font-size: small;
+}
+label i {
+    font-size: xx-large;
+}
+input[type="checkbox"]:checked + label i::before {
+    content: "\eca8";
+}
+.icon {
+    font-size: x-large;
+}
+label {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+h1.title_color {
+    background: linear-gradient(to right, rgb(136, 11, 161), rgb(173, 7, 35));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.text_underline {
+    text-decoration: underline;
+}
+.checkbox_group {
+    display: grid;
+    text-align: start;
+    justify-items: start;
+}
+.modify_type {
+    z-index: 100;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    top: 80px;
+    height: 50px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    background: rgb(20, 20, 20);
+    border-bottom: 1px solid rgb(56, 56, 56);
+    border-right: 1px solid rgb(56, 56, 56);
+    border-left: 1px solid rgb(56, 56, 56);
+    overflow: hidden;
+}
+.modify_type .type {
+    padding: 10px;
+    margin: 0px;
+    min-width: 20px;
+    border-radius: 0px;
+    font-size: large;
+    background: none;
+    border: none;
+    color: rgb(205, 205, 205);
+}
+.border_right {
+    border-right: 1px solid rgb(56, 56, 56) !important;
+}
+.border_left {
+    border-left: 1px solid rgb(56, 56, 56) !important;
+}
+
+.modify_type .type:hover i{
+    color: rgb(126, 126, 126);
+}
+.modify_type .type.active i{
+    color: rgb(42, 122, 175);
+}
+.modify_type .type.active:hover i{
+    color: rgb(32, 87, 124);
 }

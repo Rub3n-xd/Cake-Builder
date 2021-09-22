@@ -15,8 +15,10 @@ Maquetador html con el fin de ser fácil de usar tanto para programadores **como
 - [x] Selector de color del texto
 - [x] Selector de id y clase(s)
 - [x] Editar el código y ejecutarlo
-- [x] Código coloreado
+- [x] Código coloreado y con visor de linea
 - [x] Modificar textos
+- [x] Desplazar conjuntos de objetos
+- [ ] Editar elemento al hacer click en él
 - [ ] Poner todo tipo de elementos html desde el editor
 - [ ] Panel para poder editar **CSS**
 
@@ -28,12 +30,12 @@ Gracias a github pages puedes acceder desde ***https://rub3n-xd.github.io/Cake-B
 
 <div align="center">
 
-<img src="https://github.com/Rub3n-xd/Cake-Builder/blob/821a7a820ca6fbb247cfce9d699f01b007891ebe/Capturas/Captura%20%231.png" alt="captura" width="400px" height="250px">
+<img src="Capturas\Captura 0.2.png" alt="captura" width="400px" height="250px">
   
 </div>
 
 ## Contribuidores
 
-- Rub3n-xd
+- (Rub3n-xd) Rubén Velásquez
 
 Todas las contribuciones son bienvenidas :-)

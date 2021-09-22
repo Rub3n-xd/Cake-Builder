@@ -44,33 +44,58 @@ body::-webkit-scrollbar-thumb:hover {
 .content {
     padding: 10px 30vw;
 }
-.title {
+.header {
     padding: 10px 20px;
     width: 100%;
+    height: 100vh;
+    height: calc(50vh - 20px);
     width: calc(100% - 20px);
+    justify-content: center;
+    text-align: center;
+    display: grid;
+    align-items:center;
+}
+.header p{
+    font-family: "Montserrat-Bold";
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: rgba(255, 255, 255, 0.1);
+    background-image: linear-gradient(rgb(226, 226, 226), rgb(112, 112, 112));
+}
+.header .title{
+    width: 100%;
     justify-content: center;
     text-align: center;
     display: flex;
     align-items:center;
+    z-index: 200;
 }
-.title img{
+.header img{
     width: 50px;
     height: 50px;
     padding: 0px 10px;
     border-radius: 50%;
 }
 .gradient {
-    background: linear-gradient(45deg, rgb(112, 5, 64), rgb(99, 17, 31));
+    background: linear-gradient(to right, rgb(136, 11, 161), rgb(173, 7, 35));
+}
+.brown_color, .blue_color{
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: rgba(255, 255, 255, 0.1);
 }
 .brown_color {
-    color: rgb(138, 79, 40);
+    background-image: linear-gradient(rgb(138, 79, 40), rgb(40, 138, 69));
 }
 .blue_color {
-    color: rgb(32, 129, 185);
+    background-image: linear-gradient(rgb(32, 129, 185), rgb(94, 40, 138));
 }
 .write_anim {
     color: inherit;
     animation: write_anim 1s infinite;
+    color: rgb(205, 205, 205);
 }
 .code {
     font-family: "RobotoMono-Light";
@@ -81,11 +106,70 @@ body::-webkit-scrollbar-thumb:hover {
 }
 .important_box {
     padding: 10px;
-    background: rgba(70, 70, 70, 0.5);
-    border: 1px solid rgba(8, 8, 8, 0.5);
-    box-shadow: 0px 5px 5px rgba(8, 8, 8, 0.5);
-    border-radius: 15px;
+    background: linear-gradient(to right, rgb(136, 11, 161), rgb(7, 120, 173));
     text-align: start;
+}
+img.icon {
+    width: 50px;
+    height: 50px;
+    opacity: 0.2;
+}
+.layer_1 {
+    overflow: hidden;
+    position: absolute;
+    width: calc(100% - 40px);
+    height: calc(50vh - 20px);
+    z-index: 1;
+}
+.top_left {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.top20_right10 {
+    position: absolute;
+    top: 40px;
+    right: 30px;
+}
+.bottom_right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.bottom_left40 {
+    position: absolute;
+    bottom: 0;
+    left: 40px;
+}
+.rotate45deg {
+    transform: rotateZ(45deg);
+    animation: rotate45deg 1s infinite;
+}
+@keyframes rotate45deg {
+    0% {
+        transform: rotateZ(45deg);
+    }
+    50% {
+        transform: rotateZ(50deg);
+    }
+    100% {
+        transform: rotateZ(45deg);
+    }
+}
+.rotate-45deg {
+    transform: rotateZ(-45deg);
+    animation: rotate-45deg 1s infinite;
+}
+@keyframes rotate-45deg {
+    0% {
+        transform: rotateZ(-45deg);
+    }
+    50% {
+        transform: rotateZ(-50deg);
+    }
+    100% {
+        transform: rotateZ(-45deg);
+    }
 }
 @keyframes write_anim{
     0% {
