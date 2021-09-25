@@ -6,7 +6,7 @@
   
 </div>
 
-Maquetador html con el fin de ser fácil de usar tanto para programadores **como no programadores**.
+Maquetador html con el fin de ser fácil de usar tanto para programadores **como no programadores**. El proyecto está un tanto limitado porque mi idea principal es hacerlo mayoritariamente en JavaScript y veré hasta donde llega.
 
 ## Características
 
@@ -18,9 +18,9 @@ Maquetador html con el fin de ser fácil de usar tanto para programadores **como
 - [x] Código coloreado y con visor de linea
 - [x] Modificar textos
 - [x] Desplazar conjuntos de objetos
+- [x] Poder editar **CSS** **(BETA)**
 - [ ] Editar elemento al hacer click en él
 - [ ] Poner todo tipo de elementos html desde el editor
-- [ ] Panel para poder editar **CSS**
 
 ## ¿Cómo probarlo?
 
@@ -30,7 +30,9 @@ Gracias a github pages puedes acceder desde ***https://rub3n-xd.github.io/Cake-B
 
 <div align="center">
 
-<img src="Capturas\Captura 0.2.png" alt="captura" width="400px" height="250px">
+Captura de la versión más actual (v0.3-alpha)
+
+<img src="Capturas\Captura 0.3.png" alt="captura" width="400px" height="250px">
   
 </div>
 
