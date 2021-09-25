@@ -32,11 +32,21 @@
         <iframe src="template.html" frameborder="0" id="iframe"></iframe>
         
         <div class="source_code" id="source_code">
-            <div class="code_container">
-                <ul id="code_lines">
+            <div class="code_container" id="html">
+                <ul id="html_lines">
                 </ul>
-                <div spellcheck="false" contenteditable="true" name="source" id="code" cols="30" rows="10" placeholder="code..."></div>
+                <div spellcheck="false" contenteditable="true" name="source" id="html_code" cols="30" rows="10" placeholder="code..."></div>
             </div>
+            <div class="code_container" id="css">
+                <ul id="css_lines">
+                </ul>
+                <div spellcheck="false" contenteditable="false" name="source" id="css_code" cols="30" rows="10" placeholder="code..."></div>
+                <button id="toggle_cssrule_menu">Añadir regla css</button>
+            </div>
+        </div>
+        <div class="code_page_selector" id="code_page_selector">
+            <button class="html_color" id="html_page">HTML</button>
+            <button class="css_color" id="css_page">CSS</button>
         </div>
         <button id="hide_source">Ocultar código</button>
         <button id="run_code">Ejecutar código</button>
@@ -51,20 +61,23 @@
                     <h1>Añadir texto</h1>
                 </div>
                 <div class="content">
-
-                    <div class="form_group style1">
-                        <textarea type="text" name="text" id="text" placeholder="Texto a añadir  (puedes añadir elementos html en el texto)"></textarea>
-                    </div>
-                    <div class="form_group style1">
-                        <p>Color de letra</p>
-                        <input class="initial" type="color" name="color" id="color_text">
+                    <div class="form">
+                        <label for="text" class="small_size">Texto a añadir en la página</label>
+                        <div class="form_group style1">
+                            <textarea type="text" name="text" id="text" placeholder="Texto (puedes añadir elementos html en el texto)"></textarea>
+                        </div>
+                        <label for="color_text" class="small_size">Color del texto</label>
+                        <div class="form_group style1">
+                            <p>Color</p>
+                            <input class="initial" type="color" name="color" id="color_text">
+                        </div>
                     </div>
                     
-                    <div class="checkbox_group">
+                    <div class="form">
                         <input type="checkbox" id="letter_color">
                         <label for="letter_color"><i class="bx bx-checkbox"></i> Color de letra heredado</label>
-                    <input type="checkbox" id="underline">
-                    <label for="underline"><i class="bx bx-checkbox"></i> <span class="text_underline">Texto subrayado</span></label>
+                        <input type="checkbox" id="underline">
+                        <label for="underline"><i class="bx bx-checkbox"></i> <span class="text_underline">Texto subrayado</span></label>
                     </div>
                     
                     <div class="flex_item">
@@ -84,6 +97,28 @@
                         <button class="submit_style" id="h6_button" type="button">Elemento h6</button>
                     </div>
                     <button class="cancel_style" id="cancel_text_menu">Cancelar</button>
+                </div>
+            </div>        
+
+            <div class="window" id="cssrule_menu">
+                <div class="title">
+                    <h1>Añadir regla css</h1>
+                </div>
+                <div class="content">
+                    <div class="form">
+                        <label class="small_size">Selector de elementos HTML</label>
+                        <div class="form_group style1">
+                            <input spellcheck="false" type="text" id="css_selector_text" placeholder="Selector de elementos">
+                        </div>
+                        <label class="small_size">Reglas CSS agregadas al elemento</label>
+                        <div class="form_group style1">
+                            <textarea spellcheck="false" type="text" id="css_rules_text" placeholder="Reglas CSS"></textarea>
+                        </div>
+                        <input type="checkbox" id="end_index">
+                        <label for="end_index"><i class="bx bx-checkbox"></i> Agregar al final del archivo</label>
+                    </div>
+                    <button class="submit_style" id="add_cssrule">Agregar regla css</button>
+                    <button class="cancel_style" id="cancel_cssrule_menu">Cancelar</button>
                 </div>
             </div>        
         </div>

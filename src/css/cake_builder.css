@@ -21,9 +21,12 @@ p, button, a, i, img, input, textarea, label {
     font-family: "Montserrat-Light";
     color: rgb(190, 190, 190);
 }
-#code {
+#html_code, #css_code {
     font-family: "RobotoMono-Light";
     color: rgb(190, 190, 190);
+}
+.small_size {
+    font-size: small;
 }
 body {
     margin: 0px;
@@ -154,10 +157,13 @@ iframe {
     overflow-x: none;
     width: 100%;
     height: 100%;
+    display: none;
+}
+.source_code .code_container.display {
     display: flex;
 }
-.source_code .code_container #code_lines{
-    display: initial !important;
+.source_code .code_container #html_lines, .source_code .code_container #css_lines{
+    display: initial;
     width: 60px;
     padding: 0;
     margin: 0 10px 0 0;
@@ -170,7 +176,7 @@ iframe {
     color: rgb(205, 205, 205);
     align-items: center;
 }
-.source_code .code_container #code{
+.source_code .code_container #html_code, .source_code .code_container #css_code{
     white-space: pre;
     font-size: smaller;
     border: none;
@@ -187,6 +193,7 @@ button#run_code {
     position: absolute;
     border-radius: 0;
     border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
     bottom: calc(40vh);
     right: 0;
     margin: 0;
@@ -200,6 +207,7 @@ button#hide_source {
     position: absolute;
     border-radius: 0;
     border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
     bottom: calc(40vh);
     left: 0;
     margin: 0;
@@ -209,6 +217,41 @@ button#hide_source:hover {
 }
 button#hide_source.display, button#run_code.display {
     display: initial;
+}
+.code_page_selector {
+    display: none;
+    background: none;
+    position: fixed;
+    border-radius: 0;
+    bottom: calc(40vh);
+    width: 100%;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    background: rgb(15, 15, 15);
+}
+.code_page_selector.display {
+    display: flex;
+}
+.code_page_selector button{
+    height: 100%;
+    background: rgba(0, 0, 0, 0.205);
+    width: max-content;
+    border: none;
+    border-top: 2px solid rgb(51, 51, 51);
+    border-radius: 0;
+    margin: 0;
+}
+.code_page_selector button:hover{
+    background: rgba(0, 0, 0, 0.5);
+}
+.code_page_selector button.html_color {
+    border-color: rgb(214, 117, 37);
+    color: rgb(214, 117, 37);
+}
+.code_page_selector button.css_color {
+    border-color: rgb(37, 179, 214);
+    color: rgb(37, 179, 214);
 }
 .notification_error {
     padding: 10px;
@@ -226,11 +269,32 @@ button#hide_source.display, button#run_code.display {
 .code_color_2 {
     color: rgb(29, 107, 55);
 }
+.code_color_3 {
+    color: rgb(209, 123, 53) !important;
+}
+.code_color_3 span {
+    color: rgb(209, 123, 53) !important;
+}
 .code_color_4 {
     color: rgb(0, 153, 158);
 }
-.code_color_3 {
-    color: rgb(209, 123, 53) !important;
+.code_color_5 {
+    color: rgb(153, 86, 32);
+}
+.code_color_5 span{
+    color: rgb(153, 86, 32);
+}
+.code_color_6 {
+    color: rgb(91, 184, 107);
+}
+.code_color_7 {
+    color: rgb(127, 91, 184);
+}
+.code_color_8 {
+    color: rgb(170, 168, 59);
+}
+.code_color_error {
+    color: rgb(212, 59, 59);
 }
 .window {
     padding: 0px;
@@ -241,7 +305,7 @@ button#hide_source.display, button#run_code.display {
     min-width: 30%;
     max-height: 95vh;
     overflow-x: none;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .window .title {
     width: calc(100% - 20px);
@@ -341,7 +405,7 @@ h1.title_color {
 .text_underline {
     text-decoration: underline;
 }
-.checkbox_group {
+.form {
     display: grid;
     text-align: start;
     justify-items: start;
@@ -386,4 +450,14 @@ h1.title_color {
 }
 .modify_type .type.active:hover i{
     color: rgb(32, 87, 124);
+}
+#toggle_cssrule_menu {
+    position: absolute;
+    bottom: 10px;
+    right: 30px;
+    border: none;
+    background: rgb(42, 122, 175);
+}
+#toggle_cssrule_menu:hover {
+    background: rgb(32, 87, 124);
 }

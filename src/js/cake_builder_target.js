@@ -1,7 +1,11 @@
+let myRules = document.styleSheets[0].cssRules;
+console.log(myRules);
+console.log(myRules.length);
+console.log(myRules[0]);
+
 document.body.setAttribute("spellcheck","false")
 document.body.setAttribute("contenteditable","true")
 window.addEventListener("message", Messages, false);
-window.parent.postMessage([source_code(), "code"], '*')
 
 function Messages(ev)
 {
@@ -35,15 +39,26 @@ function Messages(ev)
         else if(data[6] == "code") {//Sustituir codigo
             get_source_code(data[0]);
         }
+        else if(data[6] == "style") {//Sustituir codigo
+            get_source_code_css2(data[0])
+        }
         else if(data[6] == "drag_active") {//Activar desplazamiento de divs
             drag_and_drop();
         }
         else if(data[6] == "drag_desactive") {//Desactivar desplazamiento de divs
             cancel_drag_and_drop();
         }
+        else if(data[6] == "add_cssrule") {//Añadir regla CSS
+            add_cssrule(data[0], data[1])
+        }
     }
     //Enviar codigo
-    window.parent.postMessage([source_code(), "code"], '*')
+    source_code()
+    source_code_css2()
+}
+window.onload = function() {
+    source_code()
+    source_code_css2()
 }
 /**
  * @returns {String} Code
@@ -51,7 +66,7 @@ function Messages(ev)
 function source_code() {
     let code = "<!DOCTYPE html>\n<html>\n    <head>\n        " + document.head.innerHTML.trimStart().trimEnd() + "\n    </head>\n    <body>\n        " + document.body.innerHTML.trimStart().trimEnd() + "\n    </body>\n</html>"
 
-    return code;
+    window.parent.postMessage([code, "code"], '*')
 }
 /** 
  * @param {String} code
@@ -170,8 +185,38 @@ function handleDragEnd(e) {
     });
 }
 function source_code_css() {
-    
+    Promise.all([
+        fetch(document.styleSheets[0].href).then(x => x.text()).catch(() => {
+            let error = "&error;No se ha podido obtener el contenido del archivo css"
+            return error
+        })
+    ]).then(([css]) => {
+        window.parent.postMessage([css, "style"], '*')
+    });
 }
-console.log(document.body.style.all)
-console.log(document.styleSheets[0].href)
+function source_code_css2() {
+    let code = ""
+    try {
+        for(let a = 0; a != document.styleSheets[0].cssRules.length; a++) {
+            code += document.styleSheets[0].cssRules[a].cssText
+        }
+    } catch {
+        return
+    }
+    code = 
+    code.replace(/{ /g, "{\n    ")
+    .replace(/;/g, ";\n    ")
+    .replace(/     }/g, "}\n")
 
+    window.parent.postMessage([code, "style"], '*')
+}
+function add_cssrule(rule, pos) {
+    if(pos == -1)
+        pos = document.styleSheets[0].cssRules.length
+    try {
+        document.styleSheets[0].insertRule(rule, pos)
+    }
+    catch {
+        window.parent.postMessage(["No se ha podido insertar la regla CSS", "notification"], '*')
+    }
+}
