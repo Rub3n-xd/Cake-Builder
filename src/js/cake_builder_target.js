@@ -86,7 +86,6 @@ function source_code() {
     } catch {
         code = "&error;No se ha podido obtener el codigo HTML"
     }
-
     window.parent.postMessage([code, "code"], '*')
 }
 /** 
@@ -106,19 +105,21 @@ function get_source_code(code) {
 
     if(!body.includes("<script src=\"js/cake_builder_target.js\"></script>"))
         return window.parent.postMessage(["No se ha podido ejecutar el código, no se encontro el script cake_builder_target.js", "notification"], '*')
+    if(body.includes("<link href=\"css/cake_builder_target.css\" rel=\"stylesheet\" id=\"selected_style_cake_builer\">"))
+        return window.parent.postMessage(["No se ha podido ejecutar el código, has agregado un estilo usado para el IDE", "notification"], '*')
 
     document.head.innerHTML = head
     document.body.innerHTML = body
     cancel_drag_and_drop();
 }
 document.onkeydown = function() {
-    window.parent.postMessage([source_code(), "code"], '*')
+    source_code()
 }
 document.onkeyup = function() {
-    window.parent.postMessage([source_code(), "code"], '*')
+    source_code()
 }
 document.ondragend = function() {
-    window.parent.postMessage([source_code(), "code"], '*')
+    source_code()
 }
 
 var dragSrcEl = null;
@@ -246,11 +247,13 @@ function delete_cssrule(pos) {
 }
 
 function select_text() {
+    console.log("select_text")
     let node_groups = document.querySelectorAll("button,p,span,h1,h2,h3,h4,h5,h6,button");
     [].forEach.call(node_groups, function(group) {
         group.addEventListener('click', text_onclick, false);
         group.addEventListener('mouseenter', onmouseenter, false);
     });
+    onmousedown = deselect_text();
     let css = document.createElement("link")
     css.href = "css/cake_builder_target.css"
     css.rel = "stylesheet"
@@ -258,12 +261,14 @@ function select_text() {
     document.head.appendChild(css)
 }
 function cancel_select_text() {
-    let node_groups = document.querySelectorAll("button,p,span,h1,h2,h3,h4,h5,h6");
+    console.log("cancel_select_text")
+    let node_groups = document.querySelectorAll("button,p,span,h1,h2,h3,h4,h5,h6,button");
     [].forEach.call(node_groups, function(group) {
         group.addEventListener('click', null, false);
         group.addEventListener('mouseenter', null, false);
     });
-    onmousedown = null
+    onmousedown = null;
+
     let selected_css = document.getElementById("selected_style_cake_builer")
     if(selected_css)
         selected_css.remove()
@@ -276,7 +281,8 @@ function cancel_select_text() {
 
     window.parent.postMessage(message, '*')
 }
-onmousedown = function deselect_text() {
+onmousedown = deselect_text();
+function deselect_text() {
     let after_selected = document.getElementById("element_selected_cake_builder")
     if(after_selected)
         after_selected.id = after_selected.id.replace("element_selected_cake_builder", "")
@@ -286,10 +292,16 @@ onmousedown = function deselect_text() {
     window.parent.postMessage(message, '*')
 }
 function onmouseenter(ev) {
+    let selected_css = document.getElementById("selected_style_cake_builer")
+    if(!selected_css)
+        return
     if(this.dataset)
         this.dataset.nodeName = this.nodeName.toLowerCase()
 }
 function text_onclick() {
+    let selected_css = document.getElementById("selected_style_cake_builer")
+    if(!selected_css)
+        return
     let after_selected = document.getElementById("element_selected_cake_builder")
     if(after_selected)
         after_selected.id = after_selected.id.replace("element_selected_cake_builder", "")

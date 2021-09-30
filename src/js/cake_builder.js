@@ -269,7 +269,6 @@ document.getElementById("confirm_element_modify").onclick = function() {
     let type = document.getElementById("text_type_selected")
 
     iframe.postMessage([color.value,type.value,null,null,null,null,"change_selected"], '*')
-    iframe.postMessage([null,null,null,null,null,null,"change_selected"], '*')
 }
 
 document.getElementById('cancel_text_menu').onclick = function() {
@@ -300,10 +299,6 @@ document.getElementById('hide_source').onclick = function() {
 document.getElementById('run_code').onclick = function() {
     let code = document.getElementById('html_code')
     let message =  [code.innerText,null,null,null,null,null,"code"]
-
-    iframe.postMessage(message, '*' );
-
-    message =  [null,null,null,null,null,null,"select_text"]
 
     iframe.postMessage(message, '*' );
 }
@@ -357,6 +352,11 @@ document.getElementById("html_code").onkeyup = function(ev) {
             code_lines.innerHTML += lines_html
         }
     }
+}
+document.getElementById("html_code").onpaste = function(e) {
+    e.preventDefault();
+    var text = e.clipboardData.getData('text/plain');
+    document.execCommand("insertHTML", false, text);
 }
 document.getElementById("html_page").onclick = function(ev) {
     document.getElementById("html").classList.add("display")
