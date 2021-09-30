@@ -22,26 +22,56 @@
                     <i class="bx bx-text icon"></i>
                 </button>
             </div>
+            <div class="form_group style1">
+                <button type="button" id="toggle_div_menu">
+                    <i class="bx bxs-cube icon"></i>
+                </button>
+            </div>
             <div class="modify_type">
-                <button type="button" class="type border_right"><i class="bx bx-pencil"></i></button>
+                <button type="button" class="type border_right" id="edit_button"><i class="bx bx-pencil"></i></button>
                 <button type="button" class="type" id="drag_button"><i class="bx bx-move"></i></button>
                 <button type="button" class="type border_left" id="source_button"><i class="bx bx-code-alt"></i></button>
+            </div>
+            <div id="modify_element">
+                <button type="button" id="confirm_element_modify" class="text_only confirm"><i class="bx bx-check icon"></i></button>
+
+                <div class="separator border_left"></div>
+
+                <select id="text_type_selected">
+                    <option value="h1" selected>Encabezado 1</option>
+                    <option value="h2">Encabezado 2</option>
+                    <option value="h3">Encabezado 3</option>
+                    <option value="h4">Encabezado 4</option>
+                    <option value="h5">Encabezado 5</option>
+                    <option value="h6">Encabezado 6</option>
+                    <option value="p">Párrafo</option>
+                    <option value="button">Botón</option>
+                </select>
+
+                <div class="separator border_left"></div>
+
+                <input class="border" type="color" name="color" id="text_color_selected">
+                
+                <div class="separator border_left"></div>
+
+                <button type="button" id="delete_element_modify" class="text_only cancel"><i class="bx bx-x icon"></i></button>
             </div>
         </form>
 
         <iframe src="template.html" frameborder="0" id="iframe"></iframe>
         
         <div class="source_code" id="source_code">
-            <div class="code_container" id="html">
-                <ul id="html_lines">
-                </ul>
-                <div spellcheck="false" contenteditable="true" name="source" id="html_code" cols="30" rows="10" placeholder="code..."></div>
+            <div class="code_container modern_scrollbar" id="html">
+                <ul id="html_lines"></ul>
+                <div id="html_dummy"></div>
+                <div spellcheck="false" contenteditable="true" id="html_code"></div>
             </div>
-            <div class="code_container" id="css">
-                <ul id="css_lines">
-                </ul>
-                <div spellcheck="false" contenteditable="false" name="source" id="css_code" cols="30" rows="10" placeholder="code..."></div>
+            <div class="code_container modern_scrollbar" id="css">
+                <ul id="css_lines"></ul>
+                <div id="css_dummy"></div>
+                <div spellcheck="false" contenteditable="false" id="css_code"></div>
                 <button id="toggle_cssrule_menu">Añadir regla css</button>
+                <button id="toggle_del_cssrule_menu">Borrar regla css</button>
             </div>
         </div>
         <div class="code_page_selector" id="code_page_selector">
@@ -52,6 +82,7 @@
         <button id="run_code">Ejecutar código</button>
 
         <div class="notification_error" id="notification">
+            <i class="bx bx-error-circle"></i>
             <p id="notification_text"></p>
         </div>
 
@@ -69,34 +100,46 @@
                         <label for="color_text" class="small_size">Color del texto</label>
                         <div class="form_group style1">
                             <p>Color</p>
-                            <input class="initial" type="color" name="color" id="color_text">
+                            <input class="border" type="color" name="color" id="color_text">
                         </div>
                     </div>
-                    
+
                     <div class="form">
-                        <input type="checkbox" id="letter_color">
+                        <input class="checkbox_type1" type="checkbox" id="letter_color">
                         <label for="letter_color"><i class="bx bx-checkbox"></i> Color de letra heredado</label>
-                        <input type="checkbox" id="underline">
+                        <input class="checkbox_type1" type="checkbox" id="underline">
                         <label for="underline"><i class="bx bx-checkbox"></i> <span class="text_underline">Texto subrayado</span></label>
                     </div>
                     
-                    <div class="flex_item">
-                        <button class="submit_style" id="button_button" type="button">Elemento button</button>
-                        <button class="submit_style" id="p_button" type="button">Elemento p</button>
+                    <label class="small_size">Alineación de texto</label>
+                    
+                    <div class="form_group">
+                        <input class="checkbox_type2" type="checkbox" id="align_left">
+                        <label class="border_right" onclick="off_checkboxs(['align_right','align_center'])" for="align_left"><i class="bx bx-align-left icon"></i></label>
+
+                        <input class="checkbox_type2" type="checkbox" id="align_center">
+                        <label onclick="off_checkboxs(['align_left','align_right'])" for="align_center"><i class="bx bx-align-middle icon"></i></label>
+
+                        <input class="checkbox_type2" type="checkbox" id="align_right">
+                        <label class="border_left" onclick="off_checkboxs(['align_left','align_center'])" for="align_right"><i class="bx bx-align-right icon"></i></label>
                     </div>
+                    
+                    <label class="small_size">Tipo de texto</label>
+
+                    <select id="text_type">
+                        <option value="h1" selected>Encabezado 1</option>
+                        <option value="h2">Encabezado 2</option>
+                        <option value="h3">Encabezado 3</option>
+                        <option value="h4">Encabezado 4</option>
+                        <option value="h5">Encabezado 5</option>
+                        <option value="h6">Encabezado 6</option>
+                        <option value="p">Párrafo</option>
+                        <option value="button">Botón</option>
+                    </select>
                     <div class="flex_item">
-                        <button class="submit_style" id="h1_button" type="button">Elemento h1</button>
-                        <button class="submit_style" id="h2_button" type="button">Elemento h2</button>
+                        <button class="submit_style" id="add_text_button" type="button">Añadir texto</button>
+                        <button class="cancel_style" id="cancel_text_menu">Cancelar</button>
                     </div>
-                    <div class="flex_item">
-                        <button class="submit_style" id="h3_button" type="button">Elemento h3</button>
-                        <button class="submit_style" id="h4_button" type="button">Elemento h4</button>
-                    </div>
-                    <div class="flex_item">
-                        <button class="submit_style" id="h5_button" type="button">Elemento h5</button>
-                        <button class="submit_style" id="h6_button" type="button">Elemento h6</button>
-                    </div>
-                    <button class="cancel_style" id="cancel_text_menu">Cancelar</button>
                 </div>
             </div>        
 
@@ -114,11 +157,36 @@
                         <div class="form_group style1">
                             <textarea spellcheck="false" type="text" id="css_rules_text" placeholder="Reglas CSS"></textarea>
                         </div>
-                        <input type="checkbox" id="end_index">
+                        <input class="checkbox_type1" type="checkbox" id="end_index">
                         <label for="end_index"><i class="bx bx-checkbox"></i> Agregar al final del archivo</label>
                     </div>
-                    <button class="submit_style" id="add_cssrule">Agregar regla css</button>
-                    <button class="cancel_style" id="cancel_cssrule_menu">Cancelar</button>
+                    <div class="flex_item">
+                        <button class="submit_style" id="add_cssrule">Agregar regla css</button>
+                        <button class="cancel_style" id="cancel_cssrule_menu">Cancelar</button>
+                    </div>
+                </div>
+            </div>        
+            
+            <div class="window" id="del_cssrule_menu">
+                <div class="title">
+                    <h1>Borrar regla css</h1>
+                </div>
+                <div class="content">
+                    
+                </div>
+            </div>        
+            
+            <div class="window display" id="div_menu">
+                <div class="title">
+                    <h1>Añadir elemento div</h1>
+                </div>
+                <div class="content">
+                    <p>un div es un grupo de elementos este es muy usado ya que puede usarse de diversas formas.</p>
+
+                    <div class="flex_item">
+                        <button class="submit_style" id="add_div">Añadir div</button>
+                        <button class="cancel_style" id="cancel_div_menu">Cancelar</button>
+                    </div>
                 </div>
             </div>        
         </div>

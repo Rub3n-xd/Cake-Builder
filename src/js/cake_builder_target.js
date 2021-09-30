@@ -1,8 +1,3 @@
-let myRules = document.styleSheets[0].cssRules;
-console.log(myRules);
-console.log(myRules.length);
-console.log(myRules[0]);
-
 document.body.setAttribute("spellcheck","false")
 document.body.setAttribute("contenteditable","true")
 window.addEventListener("message", Messages, false);
@@ -14,7 +9,7 @@ function Messages(ev)
     if(typeof ev.data == "object") {
         let data = ev.data
 
-        if(data[6] == "text") {//Agregar un elemento
+        if(data[6] == "text") {//Agregar un elemento de texto
             if(!data[2]) {
                 window.parent.postMessage(["Ingrese un texto", "notification"], '*')
                 return
@@ -50,21 +45,47 @@ function Messages(ev)
         }
         else if(data[6] == "add_cssrule") {//Añadir regla CSS
             add_cssrule(data[0], data[1])
+        } 
+        else if(data[6] == "delete_selected") {
+            if(document.getElementById("element_selected_cake_builder"))
+                document.getElementById("element_selected_cake_builder").remove()
+            else 
+                window.parent.postMessage(["No hay ningun elemento seleccionado", "notification"], '*')
+        }
+        else if(data[6] == "change_selected") {
+            if(document.getElementById("element_selected_cake_builder")) {
+                let element = document.getElementById("element_selected_cake_builder");
+                element.style.color = data[0]
+                ChangeNodeName(element, data[1])
+            }
+            else 
+                window.parent.postMessage(["No hay ningun elemento seleccionado", "notification"], '*')
+        }
+        else if(data[6] == "select_text") {
+            select_text();
+        }
+        else if(data[6] == "cancel_select_text") {
+            cancel_select_text();
         }
     }
     //Enviar codigo
     source_code()
-    source_code_css2()
+    source_code_css()
 }
 window.onload = function() {
     source_code()
-    source_code_css2()
+    source_code_css()
 }
 /**
  * @returns {String} Code
 **/
 function source_code() {
-    let code = "<!DOCTYPE html>\n<html>\n    <head>\n        " + document.head.innerHTML.trimStart().trimEnd() + "\n    </head>\n    <body>\n        " + document.body.innerHTML.trimStart().trimEnd() + "\n    </body>\n</html>"
+    let code
+    try {
+        code = "<!DOCTYPE html>\n<html>\n    <head>\n        " + document.head.innerHTML.trimStart().trimEnd() + "\n    </head>\n    <body>\n        " + document.body.innerHTML.trimStart().trimEnd() + "\n    </body>\n</html>"
+    } catch {
+        code = "&error;No se ha podido obtener el codigo HTML"
+    }
 
     window.parent.postMessage([code, "code"], '*')
 }
@@ -106,6 +127,7 @@ function drag_and_drop() {
     [].forEach.call(node_groups, function(group) {
         group.style.cursor = "move"
         group.setAttribute("draggable", true)
+        group.classList.remove("drag_group")
         group.addEventListener('dragstart', handleDragStart, false);
         group.addEventListener('dragenter', handleDragEnter, false)
         group.addEventListener('dragover', handleDragOver, false);
@@ -118,6 +140,7 @@ function cancel_drag_and_drop() {
     let node_groups = document.querySelectorAll("div, article, div div, article div");
     [].forEach.call(node_groups, function(group) {
         group.style.removeProperty("cursor")
+        group.classList.add("drag_group")
         group.removeAttribute("draggable")
         group.addEventListener('dragstart', null, false);
         group.addEventListener('dragenter', null, false)
@@ -157,11 +180,11 @@ function handleDrop(e) {
     if (e.stopPropagation) {
         e.stopPropagation(); 
     }
-    if (dragSrcEl != this) {
+    if (dragSrcEl != this && (dragSrcEl.nodeName == "DIV" || dragSrcEl.nodeName == "ARTICLE" )) {
         let fromClass = this.className;
         let toClass = dragSrcEl.className;
-        console.log("dragSrcEl: " + dragSrcEl.className)
-        console.log("this: " + this.className)
+        
+        
         dragSrcEl.className = fromClass;
         this.className = toClass;
 
@@ -178,6 +201,7 @@ function handleDrop(e) {
     }
 }
 function handleDragEnd(e) {
+    dragSrcEl.style.removeProperty("opacity")
     this.style.removeProperty("opacity")
     let node_groups = document.querySelectorAll("div, article, div div, article div");
     [].forEach.call(node_groups, function(group) {
@@ -185,27 +209,17 @@ function handleDragEnd(e) {
     });
 }
 function source_code_css() {
-    Promise.all([
-        fetch(document.styleSheets[0].href).then(x => x.text()).catch(() => {
-            let error = "&error;No se ha podido obtener el contenido del archivo css"
-            return error
-        })
-    ]).then(([css]) => {
-        window.parent.postMessage([css, "style"], '*')
-    });
-}
-function source_code_css2() {
     let code = ""
     try {
         for(let a = 0; a != document.styleSheets[0].cssRules.length; a++) {
             code += document.styleSheets[0].cssRules[a].cssText
         }
     } catch {
-        return
+        code = "&error;No se ha podido obtener el codigo CSS"
     }
     code = 
     code.replace(/{ /g, "{\n    ")
-    .replace(/;/g, ";\n    ")
+    .replace(/(?<=[^&][^e][^r][^r][^o][^r]);/g, ";\n    ")
     .replace(/     }/g, "}\n")
 
     window.parent.postMessage([code, "style"], '*')
@@ -219,4 +233,110 @@ function add_cssrule(rule, pos) {
     catch {
         window.parent.postMessage(["No se ha podido insertar la regla CSS", "notification"], '*')
     }
+}
+function delete_cssrule(pos) {
+    if(pos == -1)
+        pos = document.styleSheets[0].cssRules.length
+    try {
+        document.styleSheets[0].deleteRule(pos)
+    }
+    catch {
+        window.parent.postMessage(["No se ha podido borrar la regla CSS", "notification"], '*')
+    }
+}
+
+function select_text() {
+    let node_groups = document.querySelectorAll("button,p,span,h1,h2,h3,h4,h5,h6,button");
+    [].forEach.call(node_groups, function(group) {
+        group.addEventListener('click', text_onclick, false);
+        group.addEventListener('mouseenter', onmouseenter, false);
+    });
+    let css = document.createElement("link")
+    css.href = "css/cake_builder_target.css"
+    css.rel = "stylesheet"
+    css.id = "selected_style_cake_builer"
+    document.head.appendChild(css)
+}
+function cancel_select_text() {
+    let node_groups = document.querySelectorAll("button,p,span,h1,h2,h3,h4,h5,h6");
+    [].forEach.call(node_groups, function(group) {
+        group.addEventListener('click', null, false);
+        group.addEventListener('mouseenter', null, false);
+    });
+    onmousedown = null
+    let selected_css = document.getElementById("selected_style_cake_builer")
+    if(selected_css)
+        selected_css.remove()
+    
+    let selected = document.getElementById("element_selected_cake_builder")
+    if(selected)
+        selected.id = selected.id.replace("element_selected_cake_builder", "")
+    
+    let message = [null, "element_deselected"]
+
+    window.parent.postMessage(message, '*')
+}
+onmousedown = function deselect_text() {
+    let after_selected = document.getElementById("element_selected_cake_builder")
+    if(after_selected)
+        after_selected.id = after_selected.id.replace("element_selected_cake_builder", "")
+    
+    let message = [null, "element_deselected"]
+
+    window.parent.postMessage(message, '*')
+}
+function onmouseenter(ev) {
+    if(this.dataset)
+        this.dataset.nodeName = this.nodeName.toLowerCase()
+}
+function text_onclick() {
+    let after_selected = document.getElementById("element_selected_cake_builder")
+    if(after_selected)
+        after_selected.id = after_selected.id.replace("element_selected_cake_builder", "")
+    
+    this.id = "element_selected_cake_builder"
+    
+    let style = window.getComputedStyle(this)
+    
+    let message = [[rgb_to_hex(style.color), this.nodeName.toLowerCase()], "element_selected"]
+
+    window.parent.postMessage(message, '*')
+}
+/**
+ * 
+ * @param {String} colorval 
+ * @returns 
+ */
+function rgb_to_hex(colorval){
+    var colorval = colorval.replace("rgba", "rgb");
+    var colorval = colorval.replace(/(?<=\([0-9]+, [0-9]+, [0-9]+), ([0-9]|\.)+/, "");
+
+    var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    
+    if(!parts)
+        return colorval
+    delete(parts[0]);
+    
+    for (var i = 1; i <= 3; ++i) {
+        parts[i]= parseInt(parts[i]).toString(16);
+        if (parts[i].length == 1) parts[i]= '0' + parts[i];
+    }
+    
+    return '#' + parts.join('');
+
+}
+/**
+ * 
+ * @param {HTMLElement} element 
+ * @param {String} newNode
+ */
+function ChangeNodeName(element, newNode) {
+    let nodeStart = /<[a-zA-Z0-9]+/;
+    let nodeEnd = /<\/[a-zA-Z0-9]+>$/;
+    console.log(element.outerHTML)
+    element.outerHTML = element.outerHTML
+    .replace(nodeStart, "<"+newNode)
+    .replace(nodeEnd, "</"+newNode+">");
+
+    return element;
 }

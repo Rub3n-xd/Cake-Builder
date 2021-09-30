@@ -1,0 +1,59 @@
+@font-face {
+    font-family: "Montserrat-Light";
+    src: url(../fonts/Montserrat-Light.ttf);
+}
+:hover {
+    border: 1px solid rgb(0, 140, 255);
+    position: relative;
+}
+:hover::after {
+    word-break: keep-all;
+    white-space: nowrap;
+    font-weight: lighter;
+    z-index: 100;
+    content: "Elemento " attr(data-node-name);
+    padding: 10px;
+    position: absolute;
+    left: -1px;
+    top: -39px;
+    font-size: 16px;
+    font-family: "Montserrat-Light";
+    color: rgb(205, 205, 205);
+    background: rgba(0, 140, 255, 0.8);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+div:hover::after,article:hover::after,
+header:hover::after {
+    content: "Grupo de elementos";
+}
+button:hover::after{
+    content: "Elemento button";
+}
+a:hover::after{
+    content: "Elemento a";
+}
+body:hover, html:hover {
+    border: none;
+}
+#element_selected_cake_builder {
+    border: 1px solid rgb(255, 94, 0);
+    position: relative;
+}
+#element_selected_cake_builder::after {
+    word-break: keep-all;
+    white-space: nowrap;
+    font-weight: lighter;
+    z-index: 100;
+    content: "Elemento seleccionado " attr(data-node-name);
+    padding: 10px;
+    position: absolute;
+    left: -1px;
+    top: -39px;
+    font-size: 16px;
+    font-family: "Montserrat-Light";
+    color: rgb(205, 205, 205);
+    background: rgba(255, 94, 0, 0.8);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}

@@ -8,6 +8,13 @@
 
 Maquetador html con el fin de ser fácil de usar tanto para programadores **como no programadores**. El proyecto está un tanto limitado porque mi idea principal es hacerlo mayoritariamente en JavaScript y veré hasta donde llega.
 
+>Nota:
+>El boton para añadir un div no es funcional por el momento.
+
+>Nota:
+>El menu para borrar una regla css no tiene boton de cancelar
+>preferiblemente no entren al menú.
+
 ## Características
 
 - [x] Poner texto de diferentes etiquetas sin editar codigo
@@ -19,7 +26,7 @@ Maquetador html con el fin de ser fácil de usar tanto para programadores **como
 - [x] Modificar textos
 - [x] Desplazar conjuntos de objetos
 - [x] Poder editar **CSS** **(BETA)**
-- [ ] Editar elemento al hacer click en él
+- [x] Editar elemento al hacer click en él
 - [ ] Poner todo tipo de elementos html desde el editor
 
 ## ¿Cómo probarlo?

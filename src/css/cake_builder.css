@@ -21,7 +21,7 @@ p, button, a, i, img, input, textarea, label {
     font-family: "Montserrat-Light";
     color: rgb(190, 190, 190);
 }
-#html_code, #css_code {
+#html_code, #html_dummy, #css_code, #css_dummy {
     font-family: "RobotoMono-Light";
     color: rgb(190, 190, 190);
 }
@@ -101,7 +101,6 @@ button{
     cursor: pointer;
     background:none;
     border: none;
-    border-left: inherit;
     border-radius: 10px;
     padding: 10px;
     margin: 10px;
@@ -123,12 +122,31 @@ button.cancel_style:hover {
     background: rgb(107, 32, 32);
     border: 1px solid rgb(46, 14, 14);
 }
+button.text_only.confirm i{
+    color: rgb(44, 150, 76);
+}
+button.text_only.confirm:hover i{
+    color: rgb(32, 105, 54);
+}
+button.text_only.cancel i{
+    color: rgb(150, 44, 44);
+}
+button.text_only.cancel:hover i{
+    color: rgb(105, 32, 32);
+}
+button.text_only {
+    background: none !important;
+    border: none !important;
+}
 iframe {
     padding-top: 80px;
     width: 100%;
     height: calc(100vh - 80px);
 }
 /* Scrollbar */
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
 ::-webkit-scrollbar {
     background: rgb(43, 43, 43);
     border-radius: 10px;
@@ -138,6 +156,23 @@ iframe {
     border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.408);
+}
+
+.modern_scrollbar::-webkit-scrollbar-corner {
+    background: rgb(58, 58, 58);
+    border-bottom-right-radius: 10px;
+}
+.modern_scrollbar::-webkit-scrollbar {
+    background: none;
+    border-radius: 0px;
+    border: 1px solid rgb(58, 58, 58);
+}
+.modern_scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.308);
+    border-radius: 0px;
+}
+.modern_scrollbar::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.408);
 }
 .source_code {
@@ -153,8 +188,9 @@ iframe {
     display: block;
 }
 .source_code .code_container {
+    position: relative;
+    overflow-x: auto;
     overflow-y: auto;
-    overflow-x: none;
     width: 100%;
     height: 100%;
     display: none;
@@ -176,16 +212,34 @@ iframe {
     color: rgb(205, 205, 205);
     align-items: center;
 }
-.source_code .code_container #html_code, .source_code .code_container #css_code{
+.source_code .code_container #html_code, 
+.source_code .code_container #html_dummy, 
+.source_code .code_container #css_code,
+.source_code .code_container #css_dummy{
     white-space: pre;
     font-size: smaller;
     border: none;
-    width: 100%;
+    width: max-content;
     height: max-content;
     background: none;
     resize: none;
-    overflow-y: auto;
-    overflow-x: none;
+    overflow-y: visible;
+    overflow-x: visible;
+    z-index: 100;
+}
+#html_code, #css_code {
+    position: absolute;
+    top: 0px; 
+    left: 68px;
+    color: rgba(255, 255, 255, 0.1);
+}
+.source_code .code_container #html_dummy, 
+.source_code .code_container #css_dummy {
+    position: absolute;
+    top: 0px; 
+    left: 68px;
+    overflow: visible;
+    z-index: -1;
 }
 button#run_code {
     display: none;
@@ -255,13 +309,22 @@ button#hide_source.display, button#run_code.display {
 }
 .notification_error {
     padding: 10px;
-    background: rgb(148, 51, 51);
+    border-top: 2px solid rgb(148, 51, 51);
+    display: flex;
+    align-items: center;
+    background: rgb(15, 15, 15);
     position: fixed;
-    bottom: -72px;
+    bottom: -73px;
     right: 0;
+    transition: bottom 1s ease;
+}
+.notification_error i{
+    padding-right: 10px;
+    font-size: large;
+    color: rgb(148, 51, 51);
 }
 .notification_error.show {
-    animation: show_notification 2s;
+    bottom: 0px;
 }
 .code_color_1 {
     color: rgb(53, 116, 209);
@@ -303,15 +366,23 @@ button#hide_source.display, button#run_code.display {
     border: 1px solid rgb(17, 17, 17);
     border-radius: 15px;
     min-width: 30%;
+    max-width: 40%;
     max-height: 95vh;
     overflow-x: none;
     overflow-y: auto;
+    text-align: center;
+}
+@media screen and (max-width: 600px) {
+    .window {
+        max-width: 95%;
+    }
 }
 .window .title {
+    position: sticky;
     width: calc(100% - 20px);
     padding: 10px;
-    background:rgb(32, 32, 32);
-    border-bottom: 1px solid rgb(56, 56, 56);
+    background: linear-gradient(to right, rgb(136, 11, 161), rgb(173, 7, 35));
+    border-bottom: 1px solid rgb(17, 17, 17);
     justify-items: center;
     display: grid;
 }
@@ -374,10 +445,10 @@ textarea {
     resize: none;
     border: none;
 }
-input[type="checkbox"] {
+input[type="checkbox"].checkbox_type1 {
 	display: none;
 }
-input[type="checkbox"] + label {
+input[type="checkbox"].checkbox_type1 + label {
     line-height: 3em;
     cursor: pointer;
     font-size: small;
@@ -385,9 +456,27 @@ input[type="checkbox"] + label {
 label i {
     font-size: xx-large;
 }
-input[type="checkbox"]:checked + label i::before {
+input[type="checkbox"].checkbox_type1:checked + label i::before {
     content: "\eca8";
 }
+
+input[type="checkbox"].checkbox_type2 {
+	display: none;
+}
+input[type="checkbox"].checkbox_type2 + label {
+    cursor: pointer;
+    padding: 10px;
+}
+input[type="checkbox"].checkbox_type2 + label:hover i {
+    color: rgb(126, 126, 126);
+}
+input[type="checkbox"].checkbox_type2:checked + label i {
+    color: rgb(42, 122, 175);
+}
+input[type="checkbox"].checkbox_type2:checked + label:hover i {
+    color: rgb(32, 87, 124);
+}
+
 .icon {
     font-size: x-large;
 }
@@ -441,6 +530,16 @@ h1.title_color {
 .border_left {
     border-left: 1px solid rgb(56, 56, 56) !important;
 }
+.separator.border_right {
+    border-right: 1px solid rgb(56, 56, 56) !important;
+    height: 100%;
+    margin: 0px 10px;
+}
+.separator.border_left {
+    border-left: 1px solid rgb(56, 56, 56) !important;
+    height: 100%;
+    margin: 0px 10px;
+}
 
 .modify_type .type:hover i{
     color: rgb(126, 126, 126);
@@ -452,12 +551,73 @@ h1.title_color {
     color: rgb(32, 87, 124);
 }
 #toggle_cssrule_menu {
-    position: absolute;
-    bottom: 10px;
+    position: fixed;
+    bottom: 30px;
     right: 30px;
     border: none;
+    z-index: 100;
     background: rgb(42, 122, 175);
 }
 #toggle_cssrule_menu:hover {
     background: rgb(32, 87, 124);
+}
+#toggle_del_cssrule_menu {
+    position: fixed;
+    bottom: 80px;
+    right: 30px;
+    border: none;
+    z-index: 100;
+    background: rgb(175, 42, 42);
+}
+#toggle_cssrule_menu:hover {
+    background: rgb(124, 32, 32);
+}
+div#modify_element {
+    z-index: 100;
+    position: fixed;
+    display: none;
+    align-items: center;
+    top: 80px;
+    right: 20px;
+    height: 50px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    background: rgb(20, 20, 20);
+    border-bottom: 1px solid rgb(56, 56, 56);
+    border-right: 1px solid rgb(56, 56, 56);
+    border-left: 1px solid rgb(56, 56, 56);
+    overflow: hidden;
+}
+div#modify_element.display {
+    display: flex;
+}
+input[type="color"].border {
+    -webkit-appearance: none;
+    border: none;
+    border-radius: 15px;
+    width: 30px;
+    height:30px;
+    margin: 10px;
+    background: none;
+}
+input[type="color"].border::-webkit-color-swatch {
+    border: none;
+    border-radius: 15px;
+    padding: 0;
+    background: none;
+}
+input[type="color"].border::-webkit-color-swatch-wrapper {
+    border: none;
+    border-radius: 15px;
+    padding: 0;
+    background: none;
+}
+select {
+    background: rgb(34, 34, 34);
+    font-family: 'Montserrat-Bold';
+    color: rgb(190 190 190);
+    border: 1px solid rgb(62, 62, 62);
+    margin: 10px;
+    padding: 5px;
+    border-radius: 10px;
 }
